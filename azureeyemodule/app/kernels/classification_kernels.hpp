@@ -56,7 +56,7 @@ GAPI_OCV_KERNEL(GOCVParseClass, GParseClass)
 };
 
 /** C++ wrapper for classification op */
-GAPI_EXPORTS GClassificationsWithConf parseClass(const GMat& in, const GOpaque<Size>& in_sz, float confidence_threshold = 0.5f);
+GAPI_EXPORTS GClassificationsWithConf parse_class(const GMat& in, const GOpaque<Size>& in_sz, float confidence_threshold = 0.5f);
 
 } // namespace streaming
 } // namespace gapi
