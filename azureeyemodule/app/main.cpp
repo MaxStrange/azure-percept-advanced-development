@@ -2,13 +2,14 @@
 // Licensed under the MIT license.
 
 // Standard library includes
+#include <cstdlib>
 #include <fstream>
 #include <map>
 #include <pthread.h>
 #include <signal.h>
 #include <string>
+#include <unistd.h>
 #include <vector>
-#include <cstdlib>
 
 // Third party includes
 #include <opencv2/core/utility.hpp>
@@ -329,6 +330,30 @@ int main(int argc, char** argv)
 
     // Start the IoT SDK stuff
     iot::msgs::start_iot();
+
+    // Drop to lower privileges
+    int ret = setuid(65534); // Set to nobody user
+    if (ret == EAGAIN)
+    {
+        while (ret == EAGAIN)
+        {
+            util::log_error("Trying to set UID again...");
+            ret = setuid(65534);
+        }
+    }
+    else if (ret == EINVAL)
+    {
+        util::log_error("Could not drop to lower privilege level because the user we are trying to change into is not valid.");
+        return __LINE__;
+    }
+    else if (ret == EPERM)
+    {
+        util::log_error("Could not drop to lower privilege level, because apparently we are already lower privilege.");
+    }
+    else if (ret != 0)
+    {
+        util::log_error("Unknown error when trying to drop to lower privilege level: " + std::to_string(ret));
+    }
 
     bool data_collection_enabled = false;
     unsigned long int data_collection_interval_sec = 0;
