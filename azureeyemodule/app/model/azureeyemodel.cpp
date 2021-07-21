@@ -409,6 +409,8 @@ void AzureEyeModel::handle_h264_output(cv::optional<std::vector<uint8_t>> &out_h
         ofs.write(reinterpret_cast<const char*>(out_h264->data()), out_h264->size());
     }
 
+    util::log_info("PUSH NEXT H264 TO BUFFER");
+
     rtsp::H264 frame;
     frame.data = *out_h264;
     frame.timestamp = *out_h264_ts;
