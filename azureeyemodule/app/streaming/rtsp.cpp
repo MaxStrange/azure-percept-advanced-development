@@ -307,8 +307,6 @@ static void need_data_callback(GstElement *appsrc, guint unused, StreamParameter
 /** Callback to call whenever our app source needs another buffer to feed out (H.264 version). */
 static void need_data_callback_h264(GstElement *appsrc, guint unused, StreamParametersH264 *params)
 {
-    util::log_info("SEND NEW H264 FRAME OVER AIR");
-
     // Turn our H.264 frame into a Gstreamer buffer
     H264 frame = h264_buffer.front();
     guint size = frame.data.size();
@@ -356,8 +354,6 @@ static void need_data_callback_h264(GstElement *appsrc, guint unused, StreamPara
 /** Called when a new media pipeline is constructed. As such, operates in callback context. Make sure it is re-entrant! */
 static void configure_stream(GstRTSPMediaFactory *factory, GstRTSPMedia *media, gpointer user_data)
 {
-    util::log_info("CONNECTED RAW OR RESULT STREAM");
-
     // Get our parameters from the user data
     StreamParameters *params = (StreamParameters *)user_data;
 
@@ -406,8 +402,6 @@ static void configure_stream(GstRTSPMediaFactory *factory, GstRTSPMedia *media, 
 /** Called when a new media pipeline is constructed. As such, operates in callback context. Make sure it is re-entrant! */
 static void configure_stream_h264(GstRTSPMediaFactory *factory, GstRTSPMedia *media, gpointer user_data)
 {
-    util::log_info("CONNECTED H264 STREAM");
-
     // Get our parameters from the user data
     StreamParameters *params = (StreamParameters *)user_data;
 

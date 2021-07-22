@@ -61,6 +61,9 @@ RUN rpm -i /rpm/gstreamer1-1.14.0-3.el8.${ARCH}.rpm && \
     # clean up
     rm -rf /sczpy
 
+# Overwrite the mvcmd with the new one from Intel
+COPY mx.mvcmd /eyesom/mx.mvcmd
+
 # Build inference app
 COPY app /app
 
